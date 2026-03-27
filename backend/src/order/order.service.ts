@@ -24,6 +24,7 @@ export class OrderService {
     }
 
     return {
+      total: results.length,
       items: results,
     };
   }

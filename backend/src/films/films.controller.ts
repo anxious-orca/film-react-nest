@@ -9,6 +9,7 @@ export class FilmsController {
   async findAll() {
     const films = await this.filmsService.getAllFilms();
     return {
+      total: films.length,
       items: films,
     };
   }
@@ -17,6 +18,7 @@ export class FilmsController {
   async getSchedule(@Param('id') id: string) {
     const film = await this.filmsService.getFilmById(id);
     return {
+      total: film.schedule.length,
       items: film.schedule,
     };
   }
