@@ -11,7 +11,7 @@ export class OrderService {
     const results = [];
     const errors = [];
 
-    for (const ticket of dto.tickets) {
+    for (const ticket of dto.items) {
       const isBooked = await this.filmRepo.takeSeat(
         ticket.film,
         ticket.session,
