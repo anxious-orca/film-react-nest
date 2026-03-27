@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Film, FilmDocument } from './film.schema';
@@ -32,8 +32,6 @@ export class FilmRepository {
       },
     );
 
-    if (result.modifiedCount === 0) {
-      throw new BadRequestException('Seat already taken');
-    }
+    return result.modifiedCount > 0;
   }
 }
