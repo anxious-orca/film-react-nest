@@ -2,6 +2,7 @@ import {
   IsString,
   IsArray,
   ValidateNested,
+  IsEmail,
   IsNumber,
   IsUUID,
   IsDateString,
@@ -35,8 +36,14 @@ class TicketDto {
 }
 
 export class CreateOrderDto {
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  phone: string;
+
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => TicketDto)
-  items: TicketDto[];
+  tickets: TicketDto[];
 }
