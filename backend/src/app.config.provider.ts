@@ -5,8 +5,12 @@ export const configProvider = {
   inject: [ConfigService],
   useFactory: (config: ConfigService): AppConfig => ({
     database: {
-      driver: config.get('DATABASE_DRIVER') || 'mongodb',
-      url: config.get('DATABASE_URL') || '',
+      type: config.get<string>('DATABASE_DRIVER') || 'postgres',
+      host: config.get<string>('DATABASE_HOST') || 'localhost',
+      port: parseInt(config.get<string>('DATABASE_PORT') || '5432', 10),
+      username: config.get<string>('DATABASE_USERNAME') || 'student',
+      password: config.get<string>('DATABASE_PASSWORD') || '',
+      database: config.get<string>('DATABASE_NAME') || 'nest_project',
     },
   }),
 };
@@ -16,6 +20,10 @@ export interface AppConfig {
 }
 
 export interface AppConfigDatabase {
-  driver: string;
-  url: string;
+  type: string;
+  host: string;
+  port: number;
+  username: string;
+  password: string;
+  database: string;
 }

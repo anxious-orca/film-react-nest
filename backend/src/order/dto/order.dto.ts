@@ -19,6 +19,12 @@ class TicketDto {
   @IsDateString()
   daytime: string;
 
+  @IsString()
+  day: string;
+
+  @IsString()
+  time: string;
+
   @IsNumber()
   row: number;
 
