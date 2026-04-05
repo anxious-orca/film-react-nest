@@ -6,11 +6,12 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Film } from './film.entity';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity({ name: 'schedules', schema: 'nest_project' })
 export class Schedule {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string = uuidv4();
 
   @Column()
   daytime: string;
