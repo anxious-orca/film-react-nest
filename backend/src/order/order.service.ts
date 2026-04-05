@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/order.dto';
 import { FilmRepository } from '../repository/film.repository';
+import { randomUUID } from 'node:crypto';
 
 @Injectable()
 export class OrderService {
   constructor(private readonly filmRepo: FilmRepository) {}
 
   async createOrder(dto: CreateOrderDto) {
-    const { v4: uuidv4 } = await import('uuid');
     const results = [];
     const errors = [];
 
@@ -20,7 +20,7 @@ export class OrderService {
 
       if (isBooked) {
         results.push({
-          id: uuidv4(),
+          id: randomUUID(),
           ...ticket,
         });
       } else {
