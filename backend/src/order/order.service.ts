@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/order.dto';
 import { FilmRepository } from '../repository/film.repository';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class OrderService {
   constructor(private readonly filmRepo: FilmRepository) {}
 
   async createOrder(dto: CreateOrderDto) {
+    const { v4: uuidv4 } = await import('uuid');
     const results = [];
     const errors = [];
 
