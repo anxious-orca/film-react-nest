@@ -1,10 +1,10 @@
+import crypto from 'node:crypto';
+(global as any).crypto = crypto;
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import 'dotenv/config';
-import crypto from 'node:crypto';
 import { ValidationPipe } from '@nestjs/common';
-
-(global as any).crypto = crypto;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
