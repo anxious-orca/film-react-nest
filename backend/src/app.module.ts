@@ -23,16 +23,29 @@ import { Film } from './films/entities/film.entity';
     TypeOrmModule.forRootAsync({
       imports: [AppConfigModule],
       inject: ['CONFIG'],
-      useFactory: (config: AppConfig) => ({
-        type: 'postgres',
-        host: config.database.host,
-        port: config.database.port,
-        username: config.database.username,
-        password: config.database.password,
-        database: config.database.database,
-        entities: [Film, Schedule],
-        synchronize: false,
-      }),
+      useFactory: (config: AppConfig) => {
+        const isTest = process.env.NODE_ENV === 'test' || process.env.CI;
+
+        if (isTest) {
+          return {
+            type: 'sqlite',
+            database: ':memory:',
+            entities: [Film, Schedule],
+            synchronize: true,
+          };
+        }
+
+        return {
+          type: 'postgres',
+          host: config.database.host,
+          port: config.database.port,
+          username: config.database.username,
+          password: config.database.password,
+          database: config.database.database,
+          entities: [Film, Schedule],
+          synchronize: false,
+        };
+      },
     }),
 
     ServeStaticModule.forRoot({
