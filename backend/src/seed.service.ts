@@ -11,11 +11,7 @@ export class SeedService implements OnApplicationBootstrap {
     if (process.env.NODE_ENV === 'test' || process.env.CI) {
       console.log('Seeding test database...');
 
-      const files = [
-        'prac.init.sql',
-        'prac.films.sql',
-        'prac.schedules.sql',
-      ];
+      const files = ['prac.init.sql', 'prac.films.sql', 'prac.schedules.sql'];
 
       for (const file of files) {
         try {
@@ -36,7 +32,11 @@ export class SeedService implements OnApplicationBootstrap {
 
       console.log('Seeding complete!');
       const films = await this.dataSource.query('SELECT * FROM films;');
-      console.log('Seeded films:', films.length, films.map(f => f.id));
+      console.log(
+        'Seeded films:',
+        films.length,
+        films.map((f) => f.id),
+      );
     }
   }
 }
