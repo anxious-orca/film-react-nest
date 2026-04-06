@@ -1,11 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Schedule } from './schedule.entity';
-import { v4 as uuidv4 } from 'uuid';
 
 @Entity({ name: 'films', schema: 'nest_project' })
 export class Film {
   @PrimaryGeneratedColumn('uuid')
-  id: string = uuidv4();
+  id: string;
 
   @Column('double precision')
   rating: number;
