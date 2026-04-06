@@ -34,13 +34,14 @@ export class Schedule {
   price: number;
 
   @Column({
-    type: 'text',
-    transformer: {
-      to: (value: string[]) => value.join(','),
-      from: (value: string) => (value ? value.split(',') : []),
-    },
+  type: 'text',
+  default: '',
+  transformer: {
+    to: (value?: string[]) => (value ? value.join(',') : ''),
+    from: (value?: string) => (value ? value.split(',') : []),
+  },
   })
-  taken: string | string[];
+  taken: string[];
 
   @ManyToOne(() => Film, (film) => film.schedule, {
     onDelete: 'CASCADE',

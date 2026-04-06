@@ -41,13 +41,7 @@ export class FilmRepository {
         return false;
       }
 
-      let takenSeats: string[] = [];
-
-      if (Array.isArray(schedule.taken)) {
-        takenSeats = schedule.taken;
-      } else if (typeof schedule.taken === 'string' && schedule.taken.length) {
-        takenSeats = schedule.taken.split(',');
-      }
+      const takenSeats = schedule.taken || [];
 
       if (takenSeats.includes(seat)) {
         return false;
