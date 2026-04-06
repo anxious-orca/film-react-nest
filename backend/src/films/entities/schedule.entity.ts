@@ -43,6 +43,9 @@ export class Schedule {
   })
   taken: string[];
 
+  @Column()
+  filmId: string;
+
   @ManyToOne(() => Film, (film) => film.schedule, {
     onDelete: 'CASCADE',
   })
