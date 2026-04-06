@@ -40,7 +40,7 @@ export class Schedule {
       from: (value: string) => (value ? value.split(',') : []),
     },
   })
-  taken: string[];
+  taken: string | string[];
 
   @ManyToOne(() => Film, (film) => film.schedule, {
     onDelete: 'CASCADE',

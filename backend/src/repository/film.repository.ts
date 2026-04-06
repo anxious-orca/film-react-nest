@@ -41,11 +41,21 @@ export class FilmRepository {
         return false;
       }
 
-      if (schedule.taken.includes(seat)) {
+      let takenSeats: string[] = [];
+
+      if (Array.isArray(schedule.taken)) {
+        takenSeats = schedule.taken;
+      } else if (typeof schedule.taken === 'string' && schedule.taken.length) {
+        takenSeats = schedule.taken.split(',');
+      }
+
+      if (takenSeats.includes(seat)) {
         return false;
       }
 
-      schedule.taken.push(seat);
+      takenSeats.push(seat);
+
+      schedule.taken = takenSeats;
 
       await manager.save(schedule);
 
