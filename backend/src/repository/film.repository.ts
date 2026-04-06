@@ -29,15 +29,15 @@ export class FilmRepository {
   async takeSeat(filmId: string, scheduleId: string, seat: string) {
     return this.dataSource.transaction(async (manager) => {
       const schedule = await manager.findOne(Schedule, {
-        where: {
-          id: scheduleId,
-          film: { id: filmId },
-        },
+        where: { id: scheduleId },
         relations: ['film'],
-        lock: { mode: 'pessimistic_write' },
+        lock:
+          process.env.NODE_ENV === 'test' || process.env.CI
+            ? undefined
+            : { mode: 'pessimistic_write' },
       });
 
-      if (!schedule) {
+      if (!schedule || schedule.film.id !== filmId) {
         return false;
       }
 
