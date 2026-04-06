@@ -10,7 +10,7 @@ export class SeedService implements OnApplicationBootstrap {
   async onApplicationBootstrap() {
     if (process.env.NODE_ENV === 'test' || process.env.CI) {
       console.log('Seeding test database...');
-
+      
       const files = [
         'prac.init.sql',
         'prac.films.sql',
@@ -18,9 +18,20 @@ export class SeedService implements OnApplicationBootstrap {
       ];
 
       for (const file of files) {
-        const filePath = path.join(__dirname, '..', 'test', file);
-        const sql = fs.readFileSync(filePath, 'utf8');
-        await this.dataSource.query(sql);
+        try {
+          const filePath = path.join(__dirname, '..', 'test', file);
+
+          if (!fs.existsSync(filePath)) {
+            console.error(`SQL file not found: ${filePath}`);
+            continue;
+          }
+
+          const sql = fs.readFileSync(filePath, 'utf8');
+          await this.dataSource.query(sql);
+          console.log(`Executed ${file} successfully.`);
+        } catch (err) {
+          console.error(`Error executing ${file}:`, err);
+        }
       }
 
       console.log('Seeding complete!');
