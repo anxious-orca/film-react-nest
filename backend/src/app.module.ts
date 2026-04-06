@@ -10,6 +10,7 @@ import { AppConfigModule } from './config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Schedule } from './films/entities/schedule.entity';
 import { Film } from './films/entities/film.entity';
+import { SeedService } from './seed.service';
 
 @Module({
   imports: [
@@ -59,5 +60,6 @@ import { Film } from './films/entities/film.entity';
     FilmsModule,
     OrderModule,
   ],
+  providers: [SeedService],
 })
 export class AppModule {}
