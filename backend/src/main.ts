@@ -1,6 +1,3 @@
-import crypto from 'node:crypto';
-(global as any).crypto = crypto;
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import 'dotenv/config';

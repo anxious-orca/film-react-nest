@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/order.dto';
 import { FilmRepository } from '../repository/film.repository';
-import { randomUUID } from 'node:crypto';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class OrderService {
