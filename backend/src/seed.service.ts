@@ -9,8 +9,6 @@ export class SeedService implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     if (process.env.NODE_ENV === 'test' || process.env.CI) {
-      console.log('Seeding test database...');
-
       const files = ['prac.init.sql', 'prac.films.sql', 'prac.schedules.sql'];
 
       for (const file of files) {
@@ -24,19 +22,10 @@ export class SeedService implements OnApplicationBootstrap {
 
           const sql = fs.readFileSync(filePath, 'utf8');
           await this.dataSource.query(sql);
-          console.log(`Executed ${file} successfully.`);
         } catch (err) {
           console.error(`Error executing ${file}:`, err);
         }
       }
-
-      console.log('Seeding complete!');
-      const films = await this.dataSource.query('SELECT * FROM films;');
-      console.log(
-        'Seeded films:',
-        films.length,
-        films.map((f) => f.id),
-      );
     }
   }
 }
