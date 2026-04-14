@@ -6,8 +6,11 @@ import * as path from 'node:path';
 import { AppConfig } from './app.config.provider';
 import { FilmsModule } from './films/films.module';
 import { OrderModule } from './order/order.module';
-import { MongooseModule } from '@nestjs/mongoose';
 import { AppConfigModule } from './config.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Schedule } from './films/entities/schedule.entity';
+import { Film } from './films/entities/film.entity';
+import { SeedService } from './seed.service';
 
 @Module({
   imports: [
@@ -18,12 +21,32 @@ import { AppConfigModule } from './config.module';
 
     AppConfigModule,
 
-    MongooseModule.forRootAsync({
+    TypeOrmModule.forRootAsync({
       imports: [AppConfigModule],
       inject: ['CONFIG'],
-      useFactory: (config: AppConfig) => ({
-        uri: config.database.url,
-      }),
+      useFactory: (config: AppConfig) => {
+        const isTest = process.env.NODE_ENV === 'test' || process.env.CI;
+
+        if (isTest) {
+          return {
+            type: 'sqlite',
+            database: ':memory:',
+            entities: [Film, Schedule],
+            synchronize: true,
+          };
+        }
+
+        return {
+          type: 'postgres',
+          host: config.database.host,
+          port: config.database.port,
+          username: config.database.username,
+          password: config.database.password,
+          database: config.database.database,
+          entities: [Film, Schedule],
+          synchronize: false,
+        };
+      },
     }),
 
     ServeStaticModule.forRoot({
@@ -37,5 +60,6 @@ import { AppConfigModule } from './config.module';
     FilmsModule,
     OrderModule,
   ],
+  providers: [SeedService],
 })
 export class AppModule {}
