@@ -31,7 +31,7 @@ export class FilmRepository {
       const schedule = await manager.findOne(Schedule, {
         where: {
           id: scheduleId,
-          filmId: filmId, // ✅ no join needed
+          filmId: filmId,
         },
         lock:
           process.env.NODE_ENV === 'test' || process.env.CI
