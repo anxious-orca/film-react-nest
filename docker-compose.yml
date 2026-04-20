@@ -21,7 +21,7 @@ services:
       retries: 10
 
   backend:
-    build: ./backend
+    image: ghcr.io/anxious-orca/film-backend:latest
     depends_on:
       db:
         condition: service_healthy
@@ -38,14 +38,14 @@ services:
       - app
 
   frontend:
-    build: ./frontend
+    image: ghcr.io/anxious-orca/film-frontend:latest
     volumes:
       - frontend_dist:/app/dist
     networks:
       - app
 
   nginx:
-    build: ./nginx
+    image: ghcr.io/anxious-orca/film-nginx:latest
     ports:
       - "80:80"
     depends_on:
