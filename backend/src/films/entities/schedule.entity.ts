@@ -7,13 +7,7 @@ import {
 } from 'typeorm';
 import { Film } from './film.entity';
 
-const isTest = process.env.NODE_ENV === 'test' || process.env.CI;
-
-@Entity(
-  isTest
-    ? { name: 'schedules' }
-    : { name: 'schedules' },
-)
+@Entity('schedules')
 export class Schedule {
   @PrimaryGeneratedColumn('uuid')
   id: string;

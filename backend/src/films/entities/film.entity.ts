@@ -1,9 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Schedule } from './schedule.entity';
 
-const isTest = process.env.NODE_ENV === 'test' || process.env.CI;
-
-@Entity(isTest ? { name: 'films' } : { name: 'films' })
+@Entity('films')
 export class Film {
   @PrimaryGeneratedColumn('uuid')
   id: string;
