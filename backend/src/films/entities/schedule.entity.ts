@@ -12,7 +12,7 @@ const isTest = process.env.NODE_ENV === 'test' || process.env.CI;
 @Entity(
   isTest
     ? { name: 'schedules' }
-    : { name: 'schedules', schema: 'nest_project' },
+    : { name: 'schedules' },
 )
 export class Schedule {
   @PrimaryGeneratedColumn('uuid')
@@ -43,12 +43,12 @@ export class Schedule {
   })
   taken: string[];
 
-  @Column()
+  @Column({ name: 'filmid' })
   filmId: string;
 
   @ManyToOne(() => Film, (film) => film.schedule, {
-    onDelete: 'CASCADE',
+  onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'filmId' })
+  @JoinColumn({ name: 'filmid' })
   film: Film;
 }

@@ -10,7 +10,7 @@ export const configProvider = {
       port: parseInt(config.get<string>('DATABASE_PORT') || '5432', 10),
       username: config.get<string>('DATABASE_USERNAME') || 'student',
       password: config.get<string>('DATABASE_PASSWORD') || '',
-      database: config.get<string>('DATABASE_NAME') || 'nest_project',
+      database: config.get<string>('DATABASE_NAME') || 'appdb',
     },
   }),
 };
