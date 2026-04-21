@@ -9,7 +9,11 @@ export class SeedService implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     if (process.env.NODE_ENV === 'test' || process.env.CI) {
-      const files = ['01-prac.init.sql', '02-prac.films.sql', '03-prac.schedules.sql'];
+      const files = [
+        '01-prac.init.sql',
+        '02-prac.films.sql',
+        '03-prac.schedules.sql',
+      ];
 
       for (const file of files) {
         try {

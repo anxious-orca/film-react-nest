@@ -3,11 +3,7 @@ import { LoggerService, Injectable } from '@nestjs/common';
 @Injectable()
 export class TskvLogger implements LoggerService {
   private format(level: string, message: any, optionalParams: any[]) {
-    const base = [
-      `level=${level}`,
-      `message=${message}`,
-      `time=${Date.now()}`,
-    ];
+    const base = [`level=${level}`, `message=${message}`, `time=${Date.now()}`];
 
     optionalParams.forEach((param, index) => {
       base.push(`param${index}=${JSON.stringify(param)}`);
