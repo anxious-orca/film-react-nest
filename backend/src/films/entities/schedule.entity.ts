@@ -7,13 +7,7 @@ import {
 } from 'typeorm';
 import { Film } from './film.entity';
 
-const isTest = process.env.NODE_ENV === 'test' || process.env.CI;
-
-@Entity(
-  isTest
-    ? { name: 'schedules' }
-    : { name: 'schedules', schema: 'nest_project' },
-)
+@Entity('schedules')
 export class Schedule {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -34,21 +28,21 @@ export class Schedule {
   price: number;
 
   @Column({
-  type: 'text',
-  default: '',
-  transformer: {
-    to: (value?: string[]) => (value ? value.join(',') : ''),
-    from: (value?: string) => (value ? value.split(',') : []),
-  },
+    type: 'text',
+    default: '',
+    transformer: {
+      to: (value?: string[]) => (value ? value.join(',') : ''),
+      from: (value?: string) => (value ? value.split(',') : []),
+    },
   })
   taken: string[];
 
-  @Column()
+  @Column({ name: 'filmid' })
   filmId: string;
 
   @ManyToOne(() => Film, (film) => film.schedule, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'filmId' })
+  @JoinColumn({ name: 'filmid' })
   film: Film;
 }

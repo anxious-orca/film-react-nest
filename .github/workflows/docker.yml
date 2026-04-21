@@ -1,0 +1,42 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches: [ "review-3" ]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build backend
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/film-backend:latest ./backend
+
+      - name: Build frontend
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/film-frontend:latest ./frontend
+
+      - name: Build nginx
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/film-nginx:latest ./nginx
+
+      - name: Push backend
+        run: docker push ghcr.io/${{ github.repository_owner }}/film-backend:latest
+
+      - name: Push frontend
+        run: docker push ghcr.io/${{ github.repository_owner }}/film-frontend:latest
+
+      - name: Push nginx
+        run: docker push ghcr.io/${{ github.repository_owner }}/film-nginx:latest

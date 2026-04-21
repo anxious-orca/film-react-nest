@@ -169,7 +169,7 @@ export class FilmAPI extends Api implements IFilmAPI {
     async orderTickets(order: Order): Promise<OrderResult[]> {
         const payload = {
             ...order,
-            tickets: order.tickets.map(({ day, time, ...rest }) => rest),
+            tickets: order.tickets.map(({ day: _day, time: _time, ...rest }) => rest),
         };
 
         const data = await this._post<ApiListResponse<OrderResult>>(

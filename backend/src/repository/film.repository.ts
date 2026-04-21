@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { Film } from 'src/films/entities/film.entity';
-import { Schedule } from 'src/films/entities/schedule.entity';
+import { Film } from '../films/entities/film.entity';
+import { Schedule } from '../films/entities/schedule.entity';
 
 @Injectable()
 export class FilmRepository {
@@ -31,7 +31,7 @@ export class FilmRepository {
       const schedule = await manager.findOne(Schedule, {
         where: {
           id: scheduleId,
-          filmId: filmId, // ✅ no join needed
+          filmId: filmId,
         },
         lock:
           process.env.NODE_ENV === 'test' || process.env.CI
